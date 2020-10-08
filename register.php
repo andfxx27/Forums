@@ -1,6 +1,18 @@
 <?php
 
+require_once "helper/UserValidator.php";
+
 if (isset($_POST["register"])) {
+    $userValidator = new UserValidator($_POST, "register");
+    $errors = $userValidator->validateForm();
+
+    if (!$errors) {
+        // No error message, data is valid -> insert to DB
+
+    } else {
+        // Set error text on each span
+
+    }
 }
 
 ?>
@@ -17,11 +29,12 @@ if (isset($_POST["register"])) {
             <div class="input-field col s6">
                 <i class="material-icons prefix">account_circle</i>
                 <label for="firstName">First Name</label>
-                <input type="text" name="firstName" id="firstName" class="validate" autocomplete="off">
+                <input type="text" name="firstName" id="firstName" class="validate" autocomplete="off" value="<?= htmlspecialchars($_POST["firstName"] ?? ""); ?>">
+                <span id="username-field" class="helper-text"></span>
             </div>
             <div class="input-field col s6">
                 <label for="lastName">Last Name</label>
-                <input type="text" name="lastName" id="lastName" class="validate" autocomplete="off">
+                <input type="text" name="lastName" id="lastName" class="validate" autocomplete="off" value="<?= htmlspecialchars($_POST["lastName"] ?? ""); ?>">
             </div>
         </div>
 
@@ -30,7 +43,7 @@ if (isset($_POST["register"])) {
             <div class="input-field col s12">
                 <i class="material-icons prefix">email</i>
                 <label for="email">Email</label>
-                <input type="text" name="email" id="email" class="validate" autocomplete="off">
+                <input type="text" name="email" id="email" class="validate" autocomplete="off" value="<?= htmlspecialchars($_POST["email"] ?? ""); ?>">
             </div>
         </div>
 
@@ -39,11 +52,11 @@ if (isset($_POST["register"])) {
             <div class="input-field col s6">
                 <i class="material-icons prefix">lock</i>
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password" class="validate" autocomplete="off">
+                <input type="password" name="password" id="password" class="validate" autocomplete="off" value="<?= htmlspecialchars($_POST["password"] ?? ""); ?>">
             </div>
             <div class="input-field col s6">
                 <label for="passwordConfirmation">Password Confirmation</label>
-                <input type="password" name="passwordConfirmation" id="passwordConfirmation" class="validate" autocomplete="off">
+                <input type="password" name="passwordConfirmation" id="passwordConfirmation" class="validate" autocomplete="off" value="<?= htmlspecialchars($_POST["passwordConfirmation"] ?? ""); ?>">
             </div>
         </div>
 
