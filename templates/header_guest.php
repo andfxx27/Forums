@@ -29,16 +29,16 @@
             <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
             <ul class="right hide-on-med-and-down">
-                <li class="active"><a href="#">Home</a></li>
+                <li class="active"><a href="index.php">Home</a></li>
                 <li><a href="#">Create post</a></li>
-                <li><a href="#">Register</a></li>
+                <li><a href="register.php">Register</a></li>
             </ul>
         </div>
     </nav>
 
     <!-- Below list will be shown instead on medium screen (tablet) and down -->
     <ul class="sidenav" id="mobile-demo">
-        <li><a href="#">Home</a></li>
+        <li><a href="index.php">Home</a></li>
         <li><a href="#">Create post</a></li>
-        <li><a href="#">Register</a></li>
+        <li><a href="register.php">Register</a></li>
     </ul>
