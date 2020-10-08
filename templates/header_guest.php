@@ -23,7 +23,7 @@
     <!-- Navbar -->
     <nav class="light-blue darken-2">
         <div class="nav-wrapper">
-            <a href="#" class="brand-logo margin-left-sm">Forums</a>
+            <a href="index.php" class="brand-logo margin-left-sm">Forums</a>
 
             <!-- Hamburger menu which will appears on medium screen (tablet) and down -->
             <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
@@ -32,6 +32,7 @@
                 <li class="active"><a href="index.php">Home</a></li>
                 <li><a href="#">Create post</a></li>
                 <li><a href="register.php">Register</a></li>
+                <li><a href="login.php">Login</a></li>
             </ul>
         </div>
     </nav>
@@ -41,4 +42,5 @@
         <li><a href="index.php">Home</a></li>
         <li><a href="#">Create post</a></li>
         <li><a href="register.php">Register</a></li>
+        <li><a href="login.php">Login</a></li>
     </ul>
