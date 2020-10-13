@@ -1,6 +1,13 @@
 <?php
 
+// Config directory
+require_once "config/config.php";
+
+// Helper directory
 require_once "helper/UserValidator.php";
+
+// Logic directory
+require_once "logic/Database.php";
 
 if (isset($_POST["register"])) {
     $userValidator = new UserValidator($_POST, "register");
@@ -8,10 +15,9 @@ if (isset($_POST["register"])) {
 
     if (!$errors) {
         // No error message, data is valid -> insert to DB
-
+        
     } else {
-        // Set error text on each span
-
+        
     }
 }
 
@@ -30,7 +36,7 @@ if (isset($_POST["register"])) {
                 <i class="material-icons prefix">account_circle</i>
                 <label for="firstName">First Name</label>
                 <input type="text" name="firstName" id="firstName" class="validate" autocomplete="off" value="<?= htmlspecialchars($_POST["firstName"] ?? ""); ?>">
-                <span id="username-field" class="helper-text"></span>
+                <span class="red-text"><?= $errors["firstName"] ?? ""; ?></span>
             </div>
             <div class="input-field col s6">
                 <label for="lastName">Last Name</label>
@@ -44,6 +50,7 @@ if (isset($_POST["register"])) {
                 <i class="material-icons prefix">email</i>
                 <label for="email">Email</label>
                 <input type="text" name="email" id="email" class="validate" autocomplete="off" value="<?= htmlspecialchars($_POST["email"] ?? ""); ?>">
+                <span class="red-text"><?= $errors["email"] ?? ""; ?></span>
             </div>
         </div>
 
@@ -53,6 +60,7 @@ if (isset($_POST["register"])) {
                 <i class="material-icons prefix">lock</i>
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" class="validate" autocomplete="off" value="<?= htmlspecialchars($_POST["password"] ?? ""); ?>">
+                <span class="red-text"><?= $errors["password"] ?? ""; ?></span>
             </div>
             <div class="input-field col s6">
                 <label for="passwordConfirmation">Password Confirmation</label>

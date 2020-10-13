@@ -75,11 +75,12 @@ class UserValidator {
         $password = trim($this->postData["password"]);
         $passwordConfirmation = trim($this->postData["passwordConfirmation"]);
         if (empty($password) || empty($passwordConfirmation)) {
-            $this->addError("password", "Password cannot be empty!");
+            $this->addError("password", "Password and the confirmation cannot be empty!");
         } else if ($this->validationType === "register") {
             if ($password === $passwordConfirmation) {
-
-                $this->addError("password", "Password must be between 1-12 character(s) and alphanumeric!");
+                if (!preg_match("/^[a-zA-Z0-9]{8,16}$/", $password)) {
+                    $this->addError("password", "Password must be between 8-16 character(s) and alphanumeric!");
+                }
             } else {
                 $this->addError("password", "Password and the confirmation doesn't match!");
             }
