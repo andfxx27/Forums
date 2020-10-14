@@ -3,9 +3,8 @@
 // Provide generic method to query DB
 class Database {
 
-    private $pdo;
-    private $tableName;
-    private $column;
+    protected $pdo;
+    protected $tableName;
 
     public function __construct($pdo, $tableName) {
         $this->pdo = $pdo;
@@ -19,7 +18,7 @@ class Database {
         // ->query return result set as PDOStatement object
         // ->fetchAll parse the result set as array
         $rows = $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-        var_dump($rows);
+        return $rows;
     }
 
     // Insert one record to certain table

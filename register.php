@@ -2,27 +2,41 @@
 
 // Config directory
 require_once "config/config.php";
+require_once "config/session.php";
 
 // Helper directory
+require_once "helper/TablenameConstants.php";
 require_once "helper/UserValidator.php";
 
 // Logic directory
 require_once "logic/Database.php";
+require_once "logic/UsersTable.php";
 
 if (isset($_POST["register"])) {
     $userValidator = new UserValidator($_POST, "register");
     $finalResult = $userValidator->validateForm();
+    $errors = $finalResult["errors"];
 
     if (!$finalResult["errors"]) {
         // No error message, data is valid -> insert to DB
-        $db = new Database($pdo, "users");
-        if ($db->insertOne($finalResult["sanitizedData"])) {
-            // Success insert to DB
-            // Display flash message indicating success
+        $db = new UsersTable($pdo, TABLE_USER);
 
+        // Make sure the corresponding email is not registered
+        $user = $db->getUserByEmail($finalResult["sanitizedData"]["user_email"]);
+
+        // Only continue the registration process if no user is found
+        if (!$user) {
+            if ($db->insertOne($finalResult["sanitizedData"])) {
+                // Success insert to DB
+                // Set session indicating success
+                $_SESSION["success_insert"] = true;
+                header("location: login.php");
+            } else {
+                // Set session indicating failure
+                $_SESSION["success_insert"] = false;
+            }
         } else {
-            // Display flash message indicating failure
-            
+            $_SESSION["success_insert"] = false;
         }
     }
 }
@@ -90,3 +104,20 @@ if (isset($_POST["register"])) {
 </main>
 
 <?php require_once("templates/footer.php"); ?>
+
+<!-- Check all session -->
+<?php if (isset($_SESSION["success_insert"])) : ?>
+    <?php if (!$_SESSION["success_insert"]) : ?>
+
+        <!-- Display flash error message -->
+        <script>
+            displayToast(
+                "Error on registering new account. Make sure the email isn't already registered!",
+                "error"
+            );
+        </script>
+
+        <!-- Unset the session after usage -->
+        <?php unset($_SESSION["success_insert"]); ?>
+    <?php endif; ?>
+<?php endif; ?>

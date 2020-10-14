@@ -1,7 +1,9 @@
-<?php 
+<?php
+
+// Config directory
+require_once "config/session.php";
 
 if (isset($_POST["login"])) {
-
 }
 
 ?>
@@ -45,3 +47,20 @@ if (isset($_POST["login"])) {
 </main>
 
 <?php require_once("templates/footer.php"); ?>
+
+<!-- Check all session -->
+<?php if (isset($_SESSION["success_insert"])) : ?>
+    <?php if ($_SESSION["success_insert"]) : ?>
+
+        <!-- Display flash success message -->
+        <script>
+            displayToast(
+                "Success on registering new account! You are now able to login to the forum.",
+                "success"
+            );
+        </script>
+
+        <!-- Unset the session after usage -->
+        <?php unset($_SESSION["success_insert"]); ?>
+    <?php endif; ?>
+<?php endif; ?>

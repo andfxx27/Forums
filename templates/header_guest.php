@@ -17,6 +17,9 @@
     <!-- Author's own CSS -->
     <link rel="stylesheet" href="css/helper.css">
     <link rel="stylesheet" href="css/reset.css">
+
+    <!-- Custom JS for helper function -->
+    <script src="js/helper.js"></script>
 </head>
 
 <body>
