@@ -11,13 +11,19 @@ require_once "logic/Database.php";
 
 if (isset($_POST["register"])) {
     $userValidator = new UserValidator($_POST, "register");
-    $errors = $userValidator->validateForm();
+    $finalResult = $userValidator->validateForm();
 
-    if (!$errors) {
+    if (!$finalResult["errors"]) {
         // No error message, data is valid -> insert to DB
-        
-    } else {
-        
+        $db = new Database($pdo, "users");
+        if ($db->insertOne($finalResult["sanitizedData"])) {
+            // Success insert to DB
+            // Display flash message indicating success
+
+        } else {
+            // Display flash message indicating failure
+            
+        }
     }
 }
 

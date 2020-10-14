@@ -5,6 +5,7 @@ class Database {
 
     private $pdo;
     private $tableName;
+    private $column;
 
     public function __construct($pdo, $tableName) {
         $this->pdo = $pdo;
@@ -23,6 +24,30 @@ class Database {
 
     // Insert one record to certain table
     public function insertOne($data) {
-        
+        // Construct the $column & $values part from $data
+        // $column part visualized will be like: "column_name_1, column_name_2, ..."
+        $column = "";
+
+        // $values part visualized will be like: ":column_name_1, :column_name_2, ..."
+        $values = "";
+
+        $index = 0;
+        foreach ($data as $columnName => $value) {
+            
+            $column .= $columnName;
+            $values .= ":$columnName";
+
+            if ($index < count($data) - 1) {
+                $column .= ", ";
+                $values .= ", ";
+            }
+
+            ++$index;
+        }
+
+        // This query match the key (columnName) from $data to each of its corresponding value
+        $sql = "INSERT INTO $this->tableName ($column) VALUES ($values)";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute($data);
     }
 }

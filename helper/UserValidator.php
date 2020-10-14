@@ -12,6 +12,10 @@ class UserValidator {
     private $registerRequiredFields = ["firstName", "email", "password", "passwordConfirmation"];
     private $loginRequiredFields = ["email", "password"];
     private $errors = [];
+    private $sanitizedData = [];
+
+    // Store the combined result of $errors and $sanitizedData
+    private $finalResult = [];
 
     public function __construct($postData, $validationType) {
         $this->postData = $postData;
@@ -43,7 +47,10 @@ class UserValidator {
         $this->validateEmail();
         $this->validatePassword();
 
-        return $this->errors;
+        $this->finalResult["errors"] = $this->errors;
+        $this->finalResult["sanitizedData"] = $this->sanitizedData;
+
+        return $this->finalResult;
     }
 
     private function validateUsername() {
@@ -58,6 +65,11 @@ class UserValidator {
                 $this->addError("firstName", "Name must be between 1-12 character(s) and alphanumeric!");
             }
         }
+
+        // Check if there is any error
+        if (!array_key_exists("firstName", $this->errors)) {
+            $this->addSanitizedData("user_fullname", $fullName);
+        }
     }
 
     private function validateEmail() {
@@ -68,6 +80,10 @@ class UserValidator {
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $this->addError("email", "Email must be valid!");
             }
+        }
+
+        if (!array_key_exists("email", $this->errors)) {
+            $this->addSanitizedData("user_email", $email);
         }
     }
 
@@ -85,9 +101,19 @@ class UserValidator {
                 $this->addError("password", "Password and the confirmation doesn't match!");
             }
         }
+
+        if (!array_key_exists("password", $this->errors)) {
+            // Hash the password accordingly, and store the hashed password
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+            $this->addSanitizedData("user_password", $hashedPassword);
+        }
     }
 
     private function addError($field, $errorMessage) {
         $this->errors[$field] = $errorMessage;
+    }
+
+    private function addSanitizedData($field, $value) {
+        $this->sanitizedData[$field] = $value;
     }
 }
