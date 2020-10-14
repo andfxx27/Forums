@@ -43,7 +43,11 @@ class UserValidator {
             return;
         }
 
-        $this->validateUsername();
+        // Only validate username on register page
+        if ($this->validationType === "register") {
+            $this->validateUsername();
+        }
+
         $this->validateEmail();
         $this->validatePassword();
 
@@ -90,6 +94,12 @@ class UserValidator {
     private function validatePassword() {
         $password = trim($this->postData["password"]);
         $passwordConfirmation = trim($this->postData["passwordConfirmation"]);
+
+        // For login purpose, $passwordConfirmation is set to be same as $password
+        if ($this->validationType === "login") {
+            $passwordConfirmation = $password;
+        }
+
         if (empty($password) || empty($passwordConfirmation)) {
             $this->addError("password", "Password and the confirmation cannot be empty!");
         } else if ($this->validationType === "register") {

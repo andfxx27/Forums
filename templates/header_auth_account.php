@@ -1,0 +1,1 @@
+<!-- Header for authenticated user -->

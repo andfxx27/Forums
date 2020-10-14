@@ -17,7 +17,7 @@ if (isset($_POST["register"])) {
     $finalResult = $userValidator->validateForm();
     $errors = $finalResult["errors"];
 
-    if (!$finalResult["errors"]) {
+    if (!$errors) {
         // No error message, data is valid -> insert to DB
         $db = new UsersTable($pdo, TABLE_USER);
 

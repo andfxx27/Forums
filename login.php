@@ -1,9 +1,28 @@
 <?php
 
 // Config directory
+require_once "config/config.php";
 require_once "config/session.php";
 
+// Helper directory
+require_once "helper/TablenameConstants.php";
+require_once "helper/UserValidator.php";
+
+// Logic directory
+require_once "logic/Database.php";
+require_once "logic/UsersTable.php";
+
 if (isset($_POST["login"])) {
+    $userValidator = new UserValidator($_POST, "login");
+    $finalResult = $userValidator->validateForm();
+    $errors = $finalResult["errors"];
+
+    if (!$errors) {
+        // No error message, data is valid -> check user availability from DB
+
+    } else {
+        $_SESSION["success_login"] = false;
+    }
 }
 
 ?>
@@ -18,7 +37,8 @@ if (isset($_POST["login"])) {
             <div class="input-field col s12">
                 <i class="material-icons prefix">email</i>
                 <label for="email">Email</label>
-                <input type="text" name="email" id="email" class="validate" autocomplete="off">
+                <input type="text" name="email" id="email" class="validate" autocomplete="off" value="<?= htmlspecialchars($_POST["email"] ?? ""); ?>">
+                <span class="red-text"><?= $errors["email"] ?? ""; ?></span>
             </div>
         </div>
 
@@ -27,7 +47,8 @@ if (isset($_POST["login"])) {
             <div class="input-field col s12">
                 <i class="material-icons prefix">lock</i>
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password" class="validate" autocomplete="off">
+                <input type="password" name="password" id="password" class="validate" autocomplete="off" value="<?= htmlspecialchars($_POST["password"] ?? ""); ?>">
+                <span class="red-text"><?= $errors["password"] ?? ""; ?></span>
             </div>
         </div>
 
