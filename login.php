@@ -19,7 +19,24 @@ if (isset($_POST["login"])) {
 
     if (!$errors) {
         // No error message, data is valid -> check user availability from DB
+        $db = new UsersTable($pdo, TABLE_USER);
 
+        // Check if the user is registered
+        $user = $db->getUserByEmail($finalResult["sanitizedData"]["user_email"]);
+
+        if ($user) {
+            // Check if the password is correct
+            if ($db->verifyUserAccount($user, $finalResult["sanitizedData"]["user_password"])) {
+                // User is authenticated -> set session to user's email
+                $_SESSION["success_login"] = $user["user_email"];
+                header("location: index.php");
+            } else {
+                $_SESSION["success_login"] = false;
+            }
+        } else {
+            // No user account is found
+            $_SESSION["success_login"] = false;
+        }
     } else {
         $_SESSION["success_login"] = false;
     }
@@ -70,6 +87,7 @@ if (isset($_POST["login"])) {
 <?php require_once("templates/footer.php"); ?>
 
 <!-- Check all session -->
+<!-- Success registration session -->
 <?php if (isset($_SESSION["success_insert"])) : ?>
     <?php if ($_SESSION["success_insert"]) : ?>
 
@@ -83,5 +101,21 @@ if (isset($_POST["login"])) {
 
         <!-- Unset the session after usage -->
         <?php unset($_SESSION["success_insert"]); ?>
+    <?php endif; ?>
+<?php endif; ?>
+
+<!-- Failed login session -->
+<?php if (isset($_SESSION["success_login"])) : ?>
+    <?php if (!$_SESSION["success_login"]) : ?>
+
+        <script>
+            displayToast(
+                "Failed on login process! Make sure your credentials are registered correctly.",
+                "error"
+            );
+        </script>
+
+        <!-- Unset the session after usage -->
+        <?php unset($_SESSION["success_login"]); ?>
     <?php endif; ?>
 <?php endif; ?>

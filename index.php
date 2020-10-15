@@ -1,4 +1,31 @@
-<?php require_once("templates/header_guest.php"); ?>
+<?php
+
+// Config directory
+require_once "config/config.php";
+require_once "config/session.php";
+
+// Helper directory
+require_once "helper/TablenameConstants.php";
+require_once "helper/UserValidator.php";
+
+// Logic directory
+require_once "logic/Database.php";
+require_once "logic/UsersTable.php";
+
+// Check whether user has logged in
+if (isset($_SESSION["success_login"])) {
+    $db = new UsersTable($pdo, TABLE_USER);
+
+    $user = $db->getUserByEmail($_SESSION["success_login"]);
+}
+
+?>
+
+<?php if (isset($_SESSION["success_login"])) : ?>
+    <?php require_once("templates/header_auth_account.php"); ?>
+<?php else : ?>
+    <?php require_once("templates/header_guest.php"); ?>
+<?php endif; ?>
 
 <!-- Bunch of past forum post -->
 <main class="row container">

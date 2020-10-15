@@ -21,4 +21,9 @@ class UsersTable extends Database {
             return false;
         }
     }
+
+    // Verify user login
+    public function verifyUserAccount($user, $password) {
+        return password_verify($password, $user["user_password"]);
+    }
 }

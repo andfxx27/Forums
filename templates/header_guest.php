@@ -33,7 +33,6 @@
 
             <ul class="right hide-on-med-and-down">
                 <li class="active"><a href="index.php">Home</a></li>
-                <li><a href="#">Create post</a></li>
                 <li><a href="register.php">Register</a></li>
                 <li><a href="login.php">Login</a></li>
             </ul>
@@ -43,7 +42,6 @@
     <!-- Below list will be shown instead on medium screen (tablet) and down -->
     <ul class="sidenav" id="mobile-demo">
         <li><a href="index.php">Home</a></li>
-        <li><a href="#">Create post</a></li>
         <li><a href="register.php">Register</a></li>
         <li><a href="login.php">Login</a></li>
     </ul>

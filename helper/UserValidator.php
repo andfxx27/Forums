@@ -93,10 +93,11 @@ class UserValidator {
 
     private function validatePassword() {
         $password = trim($this->postData["password"]);
-        $passwordConfirmation = trim($this->postData["passwordConfirmation"]);
 
-        // For login purpose, $passwordConfirmation is set to be same as $password
-        if ($this->validationType === "login") {
+        if ($this->validationType === "register") {
+            $passwordConfirmation = trim($this->postData["passwordConfirmation"]);
+        } else {
+            // For login purpose, $passwordConfirmation is set to be same as $password
             $passwordConfirmation = $password;
         }
 
@@ -113,9 +114,16 @@ class UserValidator {
         }
 
         if (!array_key_exists("password", $this->errors)) {
+
+            // Registration
             // Hash the password accordingly, and store the hashed password
-            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-            $this->addSanitizedData("user_password", $hashedPassword);
+            if ($this->validationType === "register") {
+                $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+                $this->addSanitizedData("user_password", $hashedPassword);
+            } else {
+                // Login -> password_verify method will be used instead
+                $this->addSanitizedData("user_password", $password);
+            }
         }
     }
 
