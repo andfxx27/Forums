@@ -75,3 +75,20 @@ if (isset($_SESSION["success_login"])) {
 </main>
 
 <?php require_once("templates/footer.php"); ?>
+
+<!-- Check all session -->
+<?php if (isset($_SESSION["success_create_post"])) : ?>
+    <?php if (!$_SESSION["success_create_post"]) : ?>
+
+        <!-- Display flash error message -->
+        <script>
+            displayToast(
+                "Success on creating new post!",
+                "success"
+            );
+        </script>
+
+        <!-- Unset the session after usage -->
+        <?php unset($_SESSION["success_create_post"]); ?>
+    <?php endif; ?>
+<?php endif; ?>

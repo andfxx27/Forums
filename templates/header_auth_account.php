@@ -37,6 +37,7 @@
                 <li><a href="create_post.php">Create post</a></li>
                 <!-- Redirect to user's profile page -->
                 <li><a href="#">Welcome, <?= htmlspecialchars($user["user_fullname"]); ?></a></li>
+                <li><a href="logout.php">Log out</a></li>
             </ul>
         </div>
     </nav>
@@ -46,4 +47,5 @@
         <li><a href="index.php">Home</a></li>
         <li><a href="create_post.php">Create post</a></li>
         <li><a href="#">Welcome, <?= htmlspecialchars($user["user_fullname"]); ?></a></li>
+        <li><a href="logout.php">Log out</a></li>
     </ul>

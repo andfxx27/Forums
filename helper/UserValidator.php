@@ -1,21 +1,17 @@
 <?php
 
+require_once "helper/Validator.php";
+
 /**
  * Class name: UserValidator
- * Purpose: Validate user input, both on registration and sign in
+ * Purpose: validate user input, both on registration and sign in
  * Created at: [DD-MM-YYYY] [08-10-2020]
  */
 
-class UserValidator {
-    private $postData;
+class UserValidator extends Validator {
     private $validationType;
     private $registerRequiredFields = ["firstName", "email", "password", "passwordConfirmation"];
     private $loginRequiredFields = ["email", "password"];
-    private $errors = [];
-    private $sanitizedData = [];
-
-    // Store the combined result of $errors and $sanitizedData
-    private $finalResult = [];
 
     public function __construct($postData, $validationType) {
         $this->postData = $postData;
@@ -125,13 +121,5 @@ class UserValidator {
                 $this->addSanitizedData("user_password", $password);
             }
         }
-    }
-
-    private function addError($field, $errorMessage) {
-        $this->errors[$field] = $errorMessage;
-    }
-
-    private function addSanitizedData($field, $value) {
-        $this->sanitizedData[$field] = $value;
     }
 }
