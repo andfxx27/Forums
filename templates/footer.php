@@ -2,7 +2,7 @@
     <!-- Copyright -->
     <div class="footer-copyright">
         <div class="container">
-            <p class="center">Copyright</p>
+            <p class="center copyright-text">&copy; Copyright Forums <?= date("Y"); ?></p>
         </div>
     </div>
 </footer>
