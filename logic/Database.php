@@ -3,6 +3,11 @@
 // Provide generic method to query DB
 class Database {
 
+    // Row status (soft modification)
+    // I - INSERTED
+    // D - DELETED
+    // U - UPDATED
+
     protected $pdo;
     protected $tableName;
 
@@ -13,7 +18,7 @@ class Database {
 
     // Get all records from certain table
     public function getAll() {
-        $sql = "SELECT * FROM $this->tableName";
+        $sql = "SELECT * FROM $this->tableName WHERE status = 'I'";
 
         // ->query return result set as PDOStatement object
         // ->fetchAll parse the result set as array
