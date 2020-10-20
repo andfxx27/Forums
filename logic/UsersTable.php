@@ -10,7 +10,7 @@ class UsersTable extends Database {
     }
 
     // Method specific to users table
-    public function getUserByEmail($email) {
+    public function getOneByEmail($email) {
         $sql = "SELECT * FROM $this->tableName WHERE user_email=:user_email";
         $stmt = $this->pdo->prepare($sql);
 

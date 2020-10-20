@@ -14,10 +14,9 @@ require_once "logic/PostsTable.php";
 require_once "logic/UsersTable.php";
 
 // Check whether user has logged in
+$usersDb = new UsersTable($pdo, TABLE_USER);
 if (isset($_SESSION["success_login"])) {
-    $db = new UsersTable($pdo, TABLE_USER);
-
-    $user = $db->getUserByEmail($_SESSION["success_login"]);
+    $user = $usersDb->getOneByEmail($_SESSION["success_login"]);
 }
 
 // Display all recent forum posts
@@ -45,12 +44,13 @@ $posts = $postsDb->getAllOrderByDateDesc();
             <!-- Display each post with pagination - WIP -->
             <?php foreach ($posts as $post) : ?>
 
+                <!-- Onclick title/ arrow, redirect to corresponding forum_post.php page -->
                 <li class="collection-item avatar">
                     <i class="material-icons circle">folder</i>
-                    <span class="title"><a href="#"> <?= htmlspecialchars($post["post_title"]); ?> </a></span>
+                    <span class="title"><a href="forum_post.php?post_id=<?= htmlspecialchars($post["post_id"]); ?>"> <?= htmlspecialchars($post["post_title"]); ?> </a></span>
                     <p class="truncate"> <?= htmlspecialchars($post["post_content"]); ?> </p>
                     <p>Posted: <?= htmlspecialchars($post["post_created_at"]); ?> </p>
-                    <a href="#" class="secondary-content"><i class="material-icons">keyboard_arrow_right</i></a>
+                    <a href="forum_post.php?post_id=<?= htmlspecialchars($post["post_id"]); ?>" class="secondary-content"><i class="material-icons">keyboard_arrow_right</i></a>
                 </li>
 
             <?php endforeach; ?>

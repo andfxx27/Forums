@@ -10,10 +10,21 @@ class Database {
 
     protected $pdo;
     protected $tableName;
+    private $tableIdColumn;
 
     public function __construct($pdo, $tableName) {
         $this->pdo = $pdo;
         $this->tableName = $tableName;
+
+        switch ($this->tableName) {
+            case TABLE_USER:
+                $this->tableIdColumn = "user_id";
+                break;
+            
+            case TABLE_POST:
+                $this->tableIdColumn = "post_id";
+                break;
+        }
     }
 
     // Get all records from certain table
@@ -24,6 +35,18 @@ class Database {
         // ->fetchAll parse the result set as array
         $rows = $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
         return $rows;
+    }
+
+    // Get one record from certain table
+    public function getOneById($id) {
+        $sql = "SELECT * FROM $this->tableName WHERE $this->tableIdColumn=:$this->tableIdColumn";
+        $stmt = $this->pdo->prepare($sql);
+
+        if ($stmt->execute($id)) {
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } else {
+            return false;
+        }
     }
 
     // Insert one record to certain table
