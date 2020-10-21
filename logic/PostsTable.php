@@ -9,7 +9,7 @@ class PostsTable extends Database {
     // Method specific to posts table
     // Get all records from posts table ordered by posting date descendingly
     public function getAllOrderByDateDesc() {
-        $sql = "SELECT * FROM $this->tableName WHERE status = 'I' ORDER BY post_created_at";
+        $sql = "SELECT * FROM $this->tableName WHERE status = 'I' ORDER BY post_created_at DESC";
 
         // ->query return result set as PDOStatement object
         // ->fetchAll parse the result set as array

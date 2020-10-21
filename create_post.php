@@ -17,7 +17,7 @@ require_once "logic/UsersTable.php";
 // Check whether user has logged in
 if (isAuthenticated()) {
     $db = new UsersTable($pdo, TABLE_USER);
-    $user = $db->getUserByEmail($_SESSION["success_login"]);
+    $user = $db->getOneByEmail($_SESSION["success_login"]);
 } else {
     // Redirect user to landing page if they haven't login yet
     header("location: index.php");
@@ -43,6 +43,8 @@ if (isset($_POST["post"])) {
             $_SESSION["success_create_post"] = false;
         }
     }
+
+    unset($_POST["post"]);
 }
 
 ?>

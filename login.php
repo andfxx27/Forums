@@ -22,7 +22,7 @@ if (isset($_POST["login"])) {
         $db = new UsersTable($pdo, TABLE_USER);
 
         // Check if the user is registered
-        $user = $db->getUserByEmail($finalResult["sanitizedData"]["user_email"]);
+        $user = $db->getOneByEmail($finalResult["sanitizedData"]["user_email"]);
 
         if ($user) {
             // Check if the password is correct
@@ -40,6 +40,8 @@ if (isset($_POST["login"])) {
     } else {
         $_SESSION["success_login"] = false;
     }
+
+    unset($_POST["login"]);
 }
 
 ?>

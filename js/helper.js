@@ -4,7 +4,7 @@
 function displayToast(message, type) {
     
     let className = "";
-    className = (type === "error") ? "red white-text" : "green black-text";
+    className = (type === "error") ? "red white-text" : "green white-text";
 
     M.toast({html: message, classes: className});
 }

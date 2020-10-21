@@ -74,6 +74,7 @@ class Database {
 
         // This query match the key (columnName) from $data to each of its corresponding value
         $sql = "INSERT INTO $this->tableName ($column) VALUES ($values)";
+
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute($data);
     }

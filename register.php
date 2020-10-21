@@ -22,7 +22,7 @@ if (isset($_POST["register"])) {
         $db = new UsersTable($pdo, TABLE_USER);
 
         // Make sure the corresponding email is not registered
-        $user = $db->getUserByEmail($finalResult["sanitizedData"]["user_email"]);
+        $user = $db->getOneByEmail($finalResult["sanitizedData"]["user_email"]);
 
         // Only continue the registration process if no user is found
         if (!$user) {
@@ -39,6 +39,8 @@ if (isset($_POST["register"])) {
             $_SESSION["success_insert"] = false;
         }
     }
+
+    unset($_POST["register"]);
 }
 
 ?>

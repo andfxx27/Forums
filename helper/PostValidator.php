@@ -3,7 +3,7 @@
 require_once "helper/Validator.php";
 
 /**
- * Ckass name: PostValidator
+ * Class name: PostValidator
  * Purpose: validate post input
  * Created at: [DD-MM-YYYY] [16-10-2020]
  */
